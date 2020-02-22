@@ -2,9 +2,7 @@ package io.tpd.superheroes.controller.errors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SuperHeroAppError {
 
@@ -33,10 +31,10 @@ public class SuperHeroAppError {
     }
 
     public Map<String, Object> toAttributeMap() {
-        return Map.of(
-          "apiVersion", apiVersion,
-          "error", error
-        );
+        HashMap map = new HashMap<>();
+        map.putIfAbsent("apiVersion", apiVersion);
+        map.putIfAbsent("error", error);
+        return map;
     }
 
     public String getApiVersion() {
@@ -60,9 +58,8 @@ public class SuperHeroAppError {
             this.code = code;
             this.message = message;
             this.uniqueId = UUID.randomUUID();
-            this.errors = List.of(
-                    new Error(domain, reason, errorMessage, errorReportUri + "?id=" + uniqueId)
-            );
+            this.errors = new ArrayList<>(Collections.singletonList(
+                    new Error(domain, reason, errorMessage, errorReportUri + "?id=" + uniqueId)));
         }
 
         private ErrorBlock(final UUID uniqueId, final String code, final String message, final List<Error> errors) {

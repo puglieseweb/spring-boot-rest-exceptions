@@ -1,0 +1,11 @@
+GET http://localhost:8080/superheroes/2
+
+<> 2020-02-22T062624.200.json
+
+
+###
+
+GET http://localhost:8080/superheroes/1000
+
+###
+
